@@ -1,10 +1,10 @@
 
-int xSlut = (int) random (10, 50);
+
 
 
 float Skalering(int xSlut){
 
-  float sFaktor = width/(xSlut + 4); 
+  float sFaktor = width/(xSlut + 4);
   
   return sFaktor;
 }

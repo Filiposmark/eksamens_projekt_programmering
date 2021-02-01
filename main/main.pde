@@ -3,7 +3,10 @@ float v0;
 float alpha;
 float y0;
 PVector gra = new PVector(0, 10);
-PVector shot = new PVector(v0*cos(radians(alpha)),v0*sin(radians(alpha)));
+PVector shot = new PVector(v0*cos(-alpha),v0*sin(-alpha));
+
+float scale_size;
+
 
 
 //Ball ball = new Ball(20,100,500); 
@@ -13,7 +16,7 @@ Slider y0_slider = new Slider(100,300, 5, "y0", "m");
 
 void setup() {
   size(1700, 900);
-  
+  scale_size = Skalering(250);
   
 }
 
@@ -24,11 +27,11 @@ void draw() {
   ball.update();*/
   
   background (200);
-  pushMatrix();
-  noStroke();
-  fill(random(255), random(255), random(255));
-  ellipse(Ballx0, Bally0, BallSize, BallSize);
-  popMatrix();
+  //pushMatrix();
+  //noStroke();
+  //fill(20, 255, 0);
+  //ellipse(x0, y0, BallSize, BallSize);
+  //popMatrix();
 
   DrawKanon();
   
