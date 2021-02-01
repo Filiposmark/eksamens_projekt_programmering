@@ -16,7 +16,7 @@ Slider y0_slider = new Slider(100,300, 5, "y0", "m");
 
 void setup() {
   size(1700, 900);
-  scale_size = Skalering(250);
+  scale_size = Skalering(10);
   
 }
 
