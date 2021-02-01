@@ -1,8 +1,4 @@
 
-
-
-
-
 float BallSize = scale_size * 0.3;
 
 

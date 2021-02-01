@@ -2,9 +2,9 @@
 
 
 
-float Skalering(int xSlut){
+float Skalering(float xSlut){
 
-  float sFaktor = width/(xSlut + 4);
+  float sFaktor = width/(xSlut + 2);
   
   return sFaktor;
 }
