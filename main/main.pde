@@ -12,17 +12,25 @@ Slider v0_slider = new Slider(100,200,20, "v0", "m/s");
 Slider y0_slider = new Slider(100,300, 5, "y0", "m");
 
 void setup() {
-  size(600,600);
+  size(1700, 900);
   
   
 }
 
 void draw() {
-  background(150);
   /*ball.display();
   ball.applyForce(gra);
   ball.applyForce(shot);
   ball.update();*/
+  
+  background (200);
+  pushMatrix();
+  noStroke();
+  fill(random(255), random(255), random(255));
+  ellipse(Ballx0, Bally0, BallSize, BallSize);
+  popMatrix();
+
+  DrawKanon();
   
   alpha_slider.display();
   alpha_slider.change();
@@ -35,12 +43,5 @@ void draw() {
   println("alpha: "+alpha);
   println("v0: " + v0);
   println("y0: " +y0);
-  
-}
-
-void shot() {
-  
-  shot.x += scale_speed*v0*cos(radians(alpha));
-  shot.y += scale_speed*v0*sin(radians(alpha));
   
 }
