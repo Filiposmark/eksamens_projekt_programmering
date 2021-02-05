@@ -26,11 +26,10 @@ class Forhindring {
     fill(farve);
 
     if (Shape == "Rectangle") {
-
       rectMode(CENTER);
-      rect(scale_size*x, height-scale_size*y, scale_size*Width, scale_size*Height);
+      rect(scale_size*(x+2), height-scale_size*y, scale_size*Width, scale_size*Height);
     } else if (Shape == "Circle") {
-      ellipse(scale_size*x, height-scale_size*y, scale_size*Width, scale_size*Height);
+      ellipse(scale_size*(x+2), height-scale_size*y, scale_size*Width, scale_size*Height);
     } else {
       println("intet");
     }

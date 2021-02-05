@@ -4,7 +4,7 @@
 
 float Skalering(float xSlut){
 
-  float sFaktor = width/(xSlut + 2);
+  float sFaktor = width/(xSlut + 4);
   
   return sFaktor;
 }

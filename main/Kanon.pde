@@ -2,10 +2,8 @@
 float BallSize = scale_size * 0.3;
 
 
-
-
 void DrawKanon() {
-  float x0 = scale_size*2;
+  
   float kanonX = -(scale_size*0.5)+BallSize/2;
   float kanonY = 0;
   float kanonWidth = scale_size * 1.5;
@@ -13,7 +11,7 @@ void DrawKanon() {
 
   Float PoleWidth = scale_size*0.25;
   float PoleY = y0-(sin(alpha)*(kanonWidth*0.5-BallSize));
-  float PoleHeight = ((y0+scale_size*2)-scale_size*0.5) - PoleY;
+  float PoleHeight = (y0+scale_size*1.5) - PoleY;
   float PoleX = x0-(cos(-alpha)*(kanonWidth*0.5-BallSize))-PoleWidth/2;
 
 
@@ -43,13 +41,4 @@ void DrawKanon() {
   ellipse(PoleX+(PoleWidth/2)+(scale_size*0.5), (y0+scale_size*2)-scale_size*0.6, scale_size * 0.35, scale_size * 0.35);
 
   popMatrix();
-}
-
-
-void keyPressed() {
-  if (keyCode == UP) {
-    alpha -= radians(1);
-  } else if (keyCode == DOWN) {
-    alpha += radians(1);
-  }
 }
