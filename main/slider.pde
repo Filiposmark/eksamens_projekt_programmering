@@ -26,8 +26,8 @@ class Slider {
     }
 
     if (mousePressed || nulstillet) {
-      increments = steps/len;
-      val = (x*increments)-steps;
+      increments = len/steps; //pixels per step
+      val = round(10*(((x-linex)/increments)))*0.1; //værdi er lig slider position (x) minus sliderstart (linex) delt med antal pixels per step = step. afrundet til 1 decimal.
     }
 
     if (label == "v0") {
@@ -39,7 +39,7 @@ class Slider {
     }
 
     if (label == "y0") {
-      y0 = (height-300)-scale_size*val;
+      y0 = (height-(scale_size*1.5)-50)-scale_size*val;
     }
 
 
@@ -49,12 +49,12 @@ class Slider {
   void display() {
 
     fill(0);
-    line(linex, liney, linex+100, y);
+    line(linex, liney, linex+len, y);
     fill(255);
     circle(x, y, 15);
 
-    if (x >= linex+100) {
-      x = linex+100;
+    if (x >= linex+len) {
+      x = linex+len;
     }
 
     if (x <= linex) {

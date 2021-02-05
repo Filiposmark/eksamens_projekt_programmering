@@ -57,17 +57,7 @@ class Genstart extends Knap {
   }
 
   void action () {
-    xSlut = round(random(8, 20)*10)*0.1;
-    ySlut = round(random(1, 5)*10)*0.1;
-
-    for (int i = 0; i < SliderListe.length; i++) {
-      SliderListe[i].x = 100;
-      SliderListe[i].x = 1;
-      SliderListe[i].nulstillet = true;
-      SliderListe[i].display();
-    }
-
-    //tid = 0;
+    reset();
   }
 }
 
@@ -82,11 +72,36 @@ class Affyr extends Knap {
 }
 
 
-class Next extends Knap {
-  Next(int x, int y, int Width, int Height, String label, color farve) {
+class nyBane extends Knap {
+  nyBane(int x, int y, int Width, int Height, String label, color farve) {
     super (x, y, Width, Height, label, farve);
   }
 
   void action () {
+    reset();
+    xSlut = ((int) random(80, 250))*0.1;
+    ySlut = ((int) random(10, 50))*0.1;
+ 
+    scale_size = Skalering(xSlut);
+    x0 = scale_size*2;
+    SliderListe[2].steps = ((height-(scale_size*1.5)-50)-275)/scale_size;
+    
+    ForhindringsListe[0].x = xSlut;
+    ForhindringsListe[0].y = ySlut;
   }
+}
+
+
+
+
+
+void reset() {
+    
+  for (int i = 0; i < SliderListe.length; i++) {
+    SliderListe[i].x = 100;
+    SliderListe[i].x = 1;
+    SliderListe[i].nulstillet = true;
+    SliderListe[i].display();
+  }
+  //tid = 0;
 }
