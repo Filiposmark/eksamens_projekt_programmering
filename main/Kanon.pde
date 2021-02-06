@@ -37,8 +37,17 @@ void DrawKanon() {
 
   rect(PoleX+(PoleWidth/2)-(scale_size*0.6), (y0+scale_size*2)-scale_size*0.7, scale_size*1.2, scale_size*0.2);
   stroke(2);
-  ellipse(PoleX+(PoleWidth/2)-(scale_size*0.5), (y0+scale_size*2)-scale_size*0.6, scale_size * 0.35, scale_size * 0.35);
-  ellipse(PoleX+(PoleWidth/2)+(scale_size*0.5), (y0+scale_size*2)-scale_size*0.6, scale_size * 0.35, scale_size * 0.35);
-
+  circle(PoleX+(PoleWidth/2)-(scale_size*0.5), (y0+scale_size*2)-scale_size*0.6, scale_size * 0.35);
+  circle(PoleX+(PoleWidth/2)+(scale_size*0.5), (y0+scale_size*2)-scale_size*0.6, scale_size * 0.35);
+  
   popMatrix();
+  
+  pushMatrix();
+  noStroke();
+  fill(130, 90, 60);
+  rect(0, (y0+scale_size*2)-scale_size*0.6+scale_size * 0.35*0.5, x0+scale_size*0.6, height);
+  stroke(1);
+  popMatrix();
+  
+  
 }
