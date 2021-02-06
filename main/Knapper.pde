@@ -1,20 +1,22 @@
 
 
 class Knap {
-  int x, y, Height, Width;
-  color farve;
+  int x, y, Height, Width, textSize;
+  color farve, textColor;
   String label;
   boolean on;
 
-  Knap(int x, int y, int Width, int Height, String label, color farve) {
+  Knap(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     this.x = x;
     this.y = y;
     this.Height = Height;
     this.Width = Width;
     this.label = label;
     this.farve = farve;
+    this.textSize = textSize;
+    this.textColor = textColor;
 
-    on = true;
+    on = false;
   }
 
   void DrawKnap() {
@@ -24,8 +26,8 @@ class Knap {
       fill(farve);
       rect(x, y, Width, Height);
 
-      fill(255);
-      textSize(40);
+      fill(textColor);
+      textSize(textSize);
       text(label, x+(Width/2)-(textWidth(label)/2), y+(Height/2)+10);
       popMatrix();
     }
@@ -51,41 +53,54 @@ class Knap {
 
 
 
+
+
 class Genstart extends Knap {
-  Genstart(int x, int y, int Width, int Height, String label, color farve) {
-    super (x, y, Width, Height, label, farve);
+  Genstart(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
+    super (x, y, Width, Height, label, farve, textSize, textColor);
   }
 
   void action () {
     reset();
   }
 }
+
+
 
 
 class Affyr extends Knap {
-  Affyr(int x, int y, int Width, int Height, String label, color farve) {
-    super (x, y, Width, Height, label, farve);
+  Affyr(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
+    super (x, y, Width, Height, label, farve, textSize, textColor);
+    
+    on = true;
   }
 
   void action () {
+    //startTid() funktion
   }
 }
 
 
+
+
 class nyBane extends Knap {
-  nyBane(int x, int y, int Width, int Height, String label, color farve) {
-    super (x, y, Width, Height, label, farve);
+  nyBane(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
+    super (x, y, Width, Height, label, farve, textSize, textColor);
+    
   }
 
   void action () {
     reset();
-    xSlut = ((int) random(80, 250))*0.1;
-    ySlut = ((int) random(10, 50))*0.1;
- 
+    xSlutGenerate();
     scale_size = Skalering(xSlut);
+    y0DefaultGenerate();
+    ySlutGenerate();
+
     x0 = scale_size*2;
-    SliderListe[2].steps = ((height-(scale_size*1.5)-50)-275)/scale_size;
-    
+    y0 = y0Default;
+
+    SliderListe[2].steps = (y0Default-275)/scale_size;
+
     ForhindringsListe[0].x = xSlut;
     ForhindringsListe[0].y = ySlut;
   }
@@ -95,8 +110,10 @@ class nyBane extends Knap {
 
 
 
+
+
 void reset() {
-    
+
   for (int i = 0; i < SliderListe.length; i++) {
     SliderListe[i].x = 100;
     SliderListe[i].x = 1;

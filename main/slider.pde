@@ -39,7 +39,7 @@ class Slider {
     }
 
     if (label == "y0") {
-      y0 = (height-(scale_size*1.5)-50)-scale_size*val;
+      y0 = y0Default-scale_size*val;
     }
 
 
