@@ -76,7 +76,7 @@ class Affyr extends Knap {
   }
 
   void action () {
-    //shoot();
+    skydframe = get_frame();
   }
 }
 

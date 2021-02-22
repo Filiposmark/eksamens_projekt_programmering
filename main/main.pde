@@ -7,7 +7,7 @@ float xSlut;
 float ySlut;
 float scale_size;
 float y, x, g_;
-
+boolean hit = false;
 boolean hasbeen = false;
 int skydframe;
 
@@ -18,12 +18,12 @@ Knap[] KnapListe = new Knap[3];
 //Ball ball = new Ball(20,100,500); 
 Slider[] SliderListe = new Slider[3];
 Slider alpha_slider = new Slider(60, 60, 90, "alpha", "\u00b0");
-Slider v0_slider = new Slider(60, 130, 20, "v0", "m/s");
+Slider v0_slider = new Slider(60, 130, 40, "v0", "m/s");
 Slider y0_slider = new Slider(60, 200, 5, "y0", "m");
 
 ArrayList<Confetti> confetti = new ArrayList<Confetti>();
 
-
+Box[] boxlist = new Box[2];
 Sky[] skyliste = new Sky[5];
 float[] sky_x = {100, 400, 700, 1000, 1300};
 float[] sky_y = {100, 100, 100, 100, 100};
@@ -33,14 +33,14 @@ float[] tree_x = {random(400, 700), random(800, 1000), random(1200, 1400)};
 float[] tree_y = {random(450, 550), random(450, 550), random(450, 550)};
 
 
-
-
 void setup() {
   frameRate(20);  
   size(1700, 900);
 
   for (int i = 0; i < 100; i++) {
-    confetti.add(new Confetti(100, 100));
+    confetti.add(new Confetti(width/2, height/2));
+    confetti.add(new Confetti(width/4, height/4));
+    confetti.add(new Confetti(width-width/4, height/4));
   }
 
   for (int i = 0; i < skyliste.length; i++) {
@@ -83,7 +83,14 @@ void setup() {
   SliderListe[1] = v0_slider;
   SliderListe[2] = y0_slider;
   SliderListe[2].steps = (y0Default-275)/scale_size;
-  g_ = 2;
+
+
+
+  boxlist[0] = new Box("Bold", x0+ballx(time), bally(time), 20., 20.);
+
+  for (int i = 0; i < ForhindringsListe.length; i++) {
+    boxlist[i] = new Box("Target", ForhindringsListe[i].x, ForhindringsListe[i].y, ForhindringsListe[i].Width, ForhindringsListe[i].Height);
+  }
 }
 
 void draw() {
@@ -126,11 +133,6 @@ void draw() {
     SliderListe[i].change();
   }
 
-  //println("alpha: "+alpha);
-  //println("v0: " + v0);
-  //println("y0: " +y0);
-
-
   for (int i = 0; i < ForhindringsListe.length; i++) {
     ForhindringsListe[i].DrawForhindring();
   }
@@ -142,27 +144,25 @@ void draw() {
 
 
 
-
-  for (int i = 0; i < confetti.size(); i++) {
-    Confetti c = confetti.get(i);
-    c.display();
-    c.move();
-
-    if (c.lifespan <= 0) {
-      confetti.remove(c);
-    }
+  time = (frameCount-skydframe)/frameRate;
+  if (skydframe > 0) {
+    shoot();
   }
 
-  println("v0y: "+ v0*sin(alpha), "v0x: "+ v0*cos(alpha)+'\n');
+  if (hit) {
+    for (int i = 0; i < confetti.size(); i++) {
+      Confetti c = confetti.get(i);
+      c.display();
+      c.move();
 
-  if (keyPressed) {
-    if (key == 'l') {
-      if (!hasbeen) {
-        skydframe = get_frame();
-        hasbeen = true;
+      if (c.lifespan <= 0) {
+        confetti.remove(c);
       }
-      shoot(skydframe);
     }
+  }
+  
+  if (mousePressed) {
+    hit = true;
   }
 }
 

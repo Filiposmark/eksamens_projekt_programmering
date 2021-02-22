@@ -16,11 +16,8 @@ int get_frame() {
 }
 
 
-void shoot(int start_frame) {
+void shoot() {
   
-  
-  
-  time = (frameCount-start_frame)/frameRate;
   fill(0);
   circle(x0+ballx(time), bally(time),20);
   //println(ballx(time, 10, 45), bally(time, 10, 300));
