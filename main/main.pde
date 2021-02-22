@@ -11,8 +11,10 @@ float y, x, g_;
 boolean hasbeen = false;
 int skydframe;
 
+boolean Welcome = true;
+
 Forhindring[] ForhindringsListe = new Forhindring[1];
-Knap[] KnapListe = new Knap[3];
+Knap[] KnapListe = new Knap[6];
 
 
 //Ball ball = new Ball(20,100,500); 
@@ -79,6 +81,9 @@ void setup() {
   KnapListe[0] = new Genstart(width/2-260, height/2-50, 250, 100, "Prøv igen", color(100, 10, 100), 40, 255);
   KnapListe[1] = new nyBane(width/2+10, height/2-50, 250, 100, "Ny bane", color(100, 10, 100), 40, 255);
   KnapListe[2] = new Affyr(10, height-70, 120, 60, "Affyr", color(200, 25, 0), 22, 0);
+  KnapListe[3] = new AfslutSpil(width-130, height-70, 120, 60, "Afslut", color(200, 25, 0), 22, 0);
+  KnapListe[4] = new StartSpil(width/2-125, height/2-110, 250, 100, "Start Spil", color(100, 10, 100), 40, 255);
+  KnapListe[5] = new Exit(width/2-125, height/2+10, 250, 100, "Luk Spil", color(100, 10, 100), 40, 255);
   SliderListe[0] = alpha_slider;
   SliderListe[1] = v0_slider;
   SliderListe[2] = y0_slider;
@@ -87,81 +92,107 @@ void setup() {
 }
 
 void draw() {
+  if (Welcome) {
+    background(50, 175, 50);
 
-
-  background (30, 150, 250);
-  pushMatrix();
-  fill(50, 175, 50);
-  rect(0, height-200, width, 200);
-  popMatrix();
-
-  //pushMatrix();
-  //noStroke();
-  //fill(20, 255, 0);
-  //ellipse(x0, y0, BallSize, BallSize);
-  //popMatrix();
-
-
-
-  for (int i = 0; i < skyliste.length; i++) {
-    skyliste[i].makeSky();
-    skyliste[i].moveSky();
-    skyliste[i].collision();
-  }
-
-  for (int i = 0; i < treelist.length; i++) {
-    treelist[i].make_trunk();
-    treelist[i].make_crown();
-  }
-
-
-
-
-  y0DefaultGenerate();
-  DrawKanon();
-  drawAfstande();
-
-  for (int i = 0; i < SliderListe.length; i++) {
-    SliderListe[i].display();
-    SliderListe[i].change();
-  }
-
-  //println("alpha: "+alpha);
-  //println("v0: " + v0);
-  //println("y0: " +y0);
-
-
-  for (int i = 0; i < ForhindringsListe.length; i++) {
-    ForhindringsListe[i].DrawForhindring();
-  }
-
-  for (int i = 0; i < KnapListe.length; i++) {
-    KnapListe[i].on = true;
-    KnapListe[i].DrawKnap();
-  }
-
-
-
-
-  for (int i = 0; i < confetti.size(); i++) {
-    Confetti c = confetti.get(i);
-    c.display();
-    c.move();
-
-    if (c.lifespan <= 0) {
-      confetti.remove(c);
-    }
-  }
-
-  println("v0y: "+ v0*sin(alpha), "v0x: "+ v0*cos(alpha)+'\n');
-
-  if (keyPressed) {
-    if (key == 'l') {
-      if (!hasbeen) {
-        skydframe = get_frame();
-        hasbeen = true;
+    for (int i = 0; i < KnapListe.length; i++) {
+      if (i <= 3) {
+        KnapListe[i].on = false;
+      } else {
+        KnapListe[i].on = true;
       }
-      shoot(skydframe);
+    }
+
+    for (int i = 0; i < KnapListe.length; i++) {
+      KnapListe[i].DrawKnap();
+    }
+    fill(50);
+    textSize(30);
+    text("Velkommen til", (width/2)-0.5*textWidth("Velkommen"), 100);
+    fill(0);
+    textSize(80);
+    text("Fysik på Jorden", (width/2)-0.5*textWidth("Fysik på Jorden"), 200);
+    
+    y0DefaultGenerate();
+    y0 = y0Default;
+    alpha = atan((mouseY-y0)/(mouseX-x0));
+    DrawKanon();
+    
+  } else {
+
+
+    background (30, 150, 250);
+    pushMatrix();
+    fill(50, 175, 50);
+    rect(0, height-200, width, 200);
+    popMatrix();
+
+    //pushMatrix();
+    //noStroke();
+    //fill(20, 255, 0);
+    //ellipse(x0, y0, BallSize, BallSize);
+    //popMatrix();
+
+
+
+    for (int i = 0; i < skyliste.length; i++) {
+      skyliste[i].makeSky();
+      skyliste[i].moveSky();
+      skyliste[i].collision();
+    }
+
+    for (int i = 0; i < treelist.length; i++) {
+      treelist[i].make_trunk();
+      treelist[i].make_crown();
+    }
+
+
+
+    y0DefaultGenerate();
+    DrawKanon();
+    drawAfstande();
+
+    for (int i = 0; i < SliderListe.length; i++) {
+      SliderListe[i].display();
+      SliderListe[i].change();
+    }
+
+    //println("alpha: "+alpha);
+    //println("v0: " + v0);
+    //println("y0: " +y0);
+
+
+    for (int i = 0; i < ForhindringsListe.length; i++) {
+      ForhindringsListe[i].DrawForhindring();
+    }
+
+    for (int i = 0; i < KnapListe.length; i++) {
+      KnapListe[i].DrawKnap();
+    }
+
+
+
+
+    for (int i = 0; i < confetti.size(); i++) {
+      Confetti c = confetti.get(i);
+      c.display();
+      c.move();
+
+      if (c.lifespan <= 0) {
+        confetti.remove(c);
+      }
+    }
+
+    println("v0y: "+ v0*sin(alpha), "v0x: "+ v0*cos(alpha)+'\n');
+
+    if (keyPressed) {
+      if (key == 'l') {
+        if (!hasbeen) {
+          skydframe = get_frame();
+          hasbeen = true;
+        }
+        shoot(skydframe);
+      }
     }
   }
 }
