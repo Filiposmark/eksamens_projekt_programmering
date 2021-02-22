@@ -1,7 +1,6 @@
 
 
 
-
 float Skalering(float xSlut){
 
   float sFaktor = width/(xSlut + 4);
@@ -12,7 +11,7 @@ float Skalering(float xSlut){
 
 float xHastighed (float v0xIN, float skaleringsfaktor) {
   
-  float v0x = (v0xIN * skaleringsfaktor) / 60;
+  float v0x = (v0xIN * skaleringsfaktor);
   
   return v0x;
 }
@@ -21,7 +20,7 @@ float xHastighed (float v0xIN, float skaleringsfaktor) {
 
 float yHastighed (float v0yIN, float skaleringsfaktor) {
   
-   float v0y = (v0yIN * skaleringsfaktor) / 60;
+   float v0y = (v0yIN * skaleringsfaktor);
   
   return v0y;
 }

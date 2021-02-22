@@ -1,13 +1,15 @@
 
 float v0;
 float alpha;
-float y0, y0Default, x0;
-PVector gra = new PVector(0, 10);
-PVector shot = new PVector(v0*cos(-alpha), v0*sin(-alpha));
+float y0, y0Default, x0, t;
 
 float xSlut;
 float ySlut;
 float scale_size;
+float y, x, g_;
+
+boolean hasbeen = false;
+int skydframe;
 
 Forhindring[] ForhindringsListe = new Forhindring[1];
 Knap[] KnapListe = new Knap[3];
@@ -19,17 +21,59 @@ Slider alpha_slider = new Slider(60, 60, 90, "alpha", "\u00b0");
 Slider v0_slider = new Slider(60, 130, 20, "v0", "m/s");
 Slider y0_slider = new Slider(60, 200, 5, "y0", "m");
 
+ArrayList<Confetti> confetti = new ArrayList<Confetti>();
+
+
+Sky[] skyliste = new Sky[5];
+float[] sky_x = {100, 400, 700, 1000, 1300};
+float[] sky_y = {100, 100, 100, 100, 100};
+
+Tree[] treelist = new Tree[3];
+float[] tree_x = {random(400, 700), random(800, 1000), random(1200, 1400)};
+float[] tree_y = {random(450, 550), random(450, 550), random(450, 550)};
+
+
+
+
 void setup() {
+  frameRate(20);  
   size(1700, 900);
+
+  for (int i = 0; i < 100; i++) {
+    confetti.add(new Confetti(100, 100));
+  }
+
+  for (int i = 0; i < skyliste.length; i++) {
+    x = sky_x[i];
+    y = sky_y[i];
+    skyliste[i] = new Sky(x, y);
+  }
+
+  for (int i = 0; i < treelist.length; i++) {
+    x = tree_x[i];
+    y = tree_y[i];
+    treelist[i] = new Tree(x, y);
+  }
+
+
+  for (int i = 0; i < skyliste.length; i++) {
+    skyliste[i].setup_sky();
+    skyliste[i].sky_size();
+  }
+
+  for (int i = 0; i < treelist.length; i++) {
+    treelist[i].setup_crown();
+  }
+
 
   xSlutGenerate();
   scale_size = Skalering(xSlut);
+
 
   y0DefaultGenerate();
   ySlutGenerate(); 
 
   x0 = scale_size*2;
-
 
   ForhindringsListe[0] = new Forhindring(xSlut, ySlut, "Circle", 0.5, 0.5, color(200, 50, 50), true);
   KnapListe[0] = new Genstart(width/2-260, height/2-50, 250, 100, "Prøv igen", color(100, 10, 100), 40, 255);
@@ -39,13 +83,11 @@ void setup() {
   SliderListe[1] = v0_slider;
   SliderListe[2] = y0_slider;
   SliderListe[2].steps = (y0Default-275)/scale_size;
+  g_ = 2;
 }
 
 void draw() {
-  /*ball.display();
-   ball.applyForce(gra);
-   ball.applyForce(shot);
-   ball.update();*/
+
 
   background (30, 150, 250);
   pushMatrix();
@@ -58,6 +100,21 @@ void draw() {
   //fill(20, 255, 0);
   //ellipse(x0, y0, BallSize, BallSize);
   //popMatrix();
+
+
+
+  for (int i = 0; i < skyliste.length; i++) {
+    skyliste[i].makeSky();
+    skyliste[i].moveSky();
+    skyliste[i].collision();
+  }
+
+  for (int i = 0; i < treelist.length; i++) {
+    treelist[i].make_trunk();
+    treelist[i].make_crown();
+  }
+
+
 
 
   y0DefaultGenerate();
@@ -81,6 +138,31 @@ void draw() {
   for (int i = 0; i < KnapListe.length; i++) {
     KnapListe[i].on = true;
     KnapListe[i].DrawKnap();
+  }
+
+
+
+
+  for (int i = 0; i < confetti.size(); i++) {
+    Confetti c = confetti.get(i);
+    c.display();
+    c.move();
+
+    if (c.lifespan <= 0) {
+      confetti.remove(c);
+    }
+  }
+
+  println("v0y: "+ v0*sin(alpha), "v0x: "+ v0*cos(alpha)+'\n');
+
+  if (keyPressed) {
+    if (key == 'l') {
+      if (!hasbeen) {
+        skydframe = get_frame();
+        hasbeen = true;
+      }
+      shoot(skydframe);
+    }
   }
 }
 
