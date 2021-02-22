@@ -188,26 +188,22 @@ void drawAfstande() {
   text("xSlut: "+xSlut+" m", (width/2)-(textWidth("xSlut; "+xSlut+ " m")/2), height-xLine+25);
 
   pushMatrix();
-  translate(scale_size*(xSlut+3.3), y0Default-0.5*(ySlut*scale_size));
+  translate(scale_size*(xSlut+3.3), y0-0.5*(y0-(y0Default-scale_size*ySlut)));
   rotate(PI/2);
-  text("ySlut: "+ySlut+" m", 0-(textWidth("ySlut: "+ySlut+ " m")*0.5), 5);
+  text("ySlut: "+(round(10*((y0-y0Default)/scale_size+ySlut))*0.1)+" m", 0-(textWidth("ySlut: "+(round(10*((y0-y0Default)/scale_size+ySlut))*0.1)+ " m")*0.5), 5);
   popMatrix();
 
   strokeWeight(3);
   //tegner linjer til x-afstand
-  //line(x0, height-xLine, (width/2)-(textWidth(xSlut+ " m")/2)-10, height-xLine);
-  //line((width/2)+(textWidth(xSlut+ " m")/2)+10, height-xLine, scale_size*(xSlut+2), height-xLine);
   line(x0, height-xLine, scale_size*(xSlut+2), height-xLine);
 
   line(x0, height-xLine+10, x0, height-xLine-10);
   line(scale_size*(xSlut+2), height-xLine+10, scale_size*(xSlut+2), height-xLine-10);
 
   //tegner linjer til y-afstand
-  //line(scale_size*(xSlut+3), y0Default, scale_size*(xSlut+3), (y0Default-0.5*(ySlut*scale_size+50))+(textWidth(ySlut+ " m")/2)+10);
-  //line(scale_size*(xSlut+3), y0Default-scale_size*ySlut, scale_size*(xSlut+3), (y0Default-0.5*(ySlut*scale_size+50))-(textWidth(ySlut+ " m")/2)-10);
-  line(scale_size*(xSlut+3), y0Default, scale_size*(xSlut+3), y0Default-scale_size*ySlut);
+  line(scale_size*(xSlut+3), y0, scale_size*(xSlut+3), y0Default-scale_size*ySlut);
 
-  line(scale_size*(xSlut+3)-10, y0Default, scale_size*(xSlut+3)+10, y0Default);
+  line(scale_size*(xSlut+3)-10, y0, scale_size*(xSlut+3)+10, y0);
   line(scale_size*(xSlut+3)-10, y0Default-scale_size*ySlut, scale_size*(xSlut+3)+10, y0Default-scale_size*ySlut);
 
   strokeWeight(1);
