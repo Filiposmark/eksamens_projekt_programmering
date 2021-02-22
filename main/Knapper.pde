@@ -71,7 +71,7 @@ class Genstart extends Knap {
 class Affyr extends Knap {
   Affyr(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
-    
+
     on = true;
   }
 
@@ -86,7 +86,6 @@ class Affyr extends Knap {
 class nyBane extends Knap {
   nyBane(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
-    
   }
 
   void action () {
@@ -107,8 +106,47 @@ class nyBane extends Knap {
 }
 
 
+class StartSpil extends Knap {
+  StartSpil(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
+    super (x, y, Width, Height, label, farve, textSize, textColor);
+  }
+
+  void action () {
+    for (int i = 0; i < KnapListe.length; i++) {
+      if (i <= 3) {
+        KnapListe[i].on = true;
+      } else {
+        KnapListe[i].on = false;
+      }
+    }
+    
+    Welcome = false;
+    
+  }
+}
 
 
+class AfslutSpil extends Knap {
+  AfslutSpil(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
+    super (x, y, Width, Height, label, farve, textSize, textColor);
+  }
+
+  void action () {
+    Welcome = true;
+    
+  }
+}
+
+
+class Exit extends Knap {
+  Exit(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
+    super (x, y, Width, Height, label, farve, textSize, textColor);
+  }
+
+  void action () {
+    exit();
+  }
+}
 
 
 
