@@ -31,7 +31,7 @@ class Slider {
     }
 
     if (label == "v0") {
-      v0 = scale_size*val;
+      v0 = val;
     }
 
     if (label == "alpha") {
