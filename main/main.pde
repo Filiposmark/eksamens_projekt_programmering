@@ -55,7 +55,6 @@ void setup() {
     treelist[i] = new Tree(x, y);
   }
 
-
   for (int i = 0; i < skyliste.length; i++) {
     skyliste[i].setup_sky();
     skyliste[i].sky_size();
@@ -65,10 +64,8 @@ void setup() {
     treelist[i].setup_crown();
   }
 
-
   xSlutGenerate();
   scale_size = Skalering(xSlut);
-
 
   y0DefaultGenerate();
   ySlutGenerate(); 
@@ -83,18 +80,9 @@ void setup() {
   SliderListe[1] = v0_slider;
   SliderListe[2] = y0_slider;
   SliderListe[2].steps = (y0Default-275)/scale_size;
-
-
-
-  boxlist[0] = new Box("Bold", x0+ballx(time), bally(time), 20., 20.);
-
-  for (int i = 0; i < ForhindringsListe.length; i++) {
-    boxlist[i] = new Box("Target", ForhindringsListe[i].x, ForhindringsListe[i].y, ForhindringsListe[i].Width, ForhindringsListe[i].Height);
-  }
 }
 
 void draw() {
-
 
   background (30, 150, 250);
   pushMatrix();
@@ -108,8 +96,6 @@ void draw() {
   //ellipse(x0, y0, BallSize, BallSize);
   //popMatrix();
 
-
-
   for (int i = 0; i < skyliste.length; i++) {
     skyliste[i].makeSky();
     skyliste[i].moveSky();
@@ -120,9 +106,6 @@ void draw() {
     treelist[i].make_trunk();
     treelist[i].make_crown();
   }
-
-
-
 
   y0DefaultGenerate();
   DrawKanon();
@@ -143,7 +126,6 @@ void draw() {
   }
 
 
-
   time = (frameCount-skydframe)/frameRate;
   if (skydframe > 0) {
     shoot();
@@ -160,10 +142,16 @@ void draw() {
       }
     }
   }
-  
-  if (mousePressed) {
+  rectMode(CENTER);
+  boxlist[0] = new Box("Bold", x0+ballx(time), bally(time), 20., 20.);
+  boxlist[1] = new Box("Target", scale_size*(ForhindringsListe[0].x+2), y0Default-scale_size*ForhindringsListe[0].y, scale_size*ForhindringsListe[0].Width, scale_size*ForhindringsListe[0].Height);
+  rectMode(CORNER);
+
+  if (boxCollision(boxlist[0], boxlist[1])) {
     hit = true;
   }
+
+  println(time);
 }
 
 

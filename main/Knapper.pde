@@ -106,12 +106,6 @@ class nyBane extends Knap {
   }
 }
 
-
-
-
-
-
-
 void reset() {
 
   for (int i = 0; i < SliderListe.length; i++) {
@@ -120,5 +114,6 @@ void reset() {
     SliderListe[i].nulstillet = true;
     SliderListe[i].display();
   }
-  //tid = 0;
+  
+  hit = false;
 }
