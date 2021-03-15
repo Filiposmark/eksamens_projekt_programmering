@@ -102,6 +102,7 @@ class nyBane extends Knap {
 
     ForhindringsListe[0].x = xSlut;
     ForhindringsListe[0].y = ySlut;
+    opgave();
   }
 }
 
@@ -120,6 +121,7 @@ class StartSpil extends Knap {
       }
     }
     
+    opgave();
     Welcome = false;
     
   }

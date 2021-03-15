@@ -20,8 +20,8 @@ Knap[] KnapListe = new Knap[6];
 //Ball ball = new Ball(20,100,500); 
 Slider[] SliderListe = new Slider[3];
 Slider alpha_slider = new Slider(60, 60, 90, "alpha", "\u00b0");
-Slider v0_slider = new Slider(60, 130, 20, "v0", "m/s");
-Slider y0_slider = new Slider(60, 200, 5, "y0", "m");
+Slider v0_slider = new Slider(60, 130, 30, "v0", "m/s");
+Slider y0_slider = new Slider(60, 200, 1, "y0", "m"); //tilfældig Steps-værdi. ændres senere.
 
 ArrayList<Confetti> confetti = new ArrayList<Confetti>();
 
@@ -112,12 +112,11 @@ void draw() {
     fill(0);
     textSize(80);
     text("Fysik på Jorden", (width/2)-0.5*textWidth("Fysik på Jorden"), 200);
-    
+
     y0DefaultGenerate();
     y0 = y0Default;
     alpha = atan((mouseY-y0)/(mouseX-x0));
     DrawKanon();
-    
   } else {
 
 
@@ -126,12 +125,6 @@ void draw() {
     fill(50, 175, 50);
     rect(0, height-200, width, 200);
     popMatrix();
-
-    //pushMatrix();
-    //noStroke();
-    //fill(20, 255, 0);
-    //ellipse(x0, y0, BallSize, BallSize);
-    //popMatrix();
 
 
 
@@ -183,7 +176,7 @@ void draw() {
       }
     }
 
-    println("v0y: "+ v0*sin(alpha), "v0x: "+ v0*cos(alpha)+'\n');
+    // println("v0y: "+ v0*sin(alpha), "v0x: "+ v0*cos(alpha)+'\n');
 
     if (keyPressed) {
       if (key == 'l') {
@@ -250,4 +243,42 @@ void ySlutGenerate() {
 
 void y0DefaultGenerate() {
   y0Default = height-scale_size*1.5-100;
+}
+
+
+
+void opgave() {
+  for (int i = 0; i < SliderListe.length; i++) {
+    SliderListe[i].locked = false;
+  }
+
+  int task = (int) random(0, 3);
+  println(task);
+
+  float value = 0;
+  
+
+  SliderListe[task].locked = true;
+  SliderListe[task].nulstillet = false;
+
+  if (SliderListe[task].label == "v0") {
+    value = round((int) random(150, 300))*0.1;
+    SliderListe[task].val = value;
+    v0 = value;
+  }
+
+  if (SliderListe[task].label == "alpha") {
+   value = round((int) random(100, 800))*0.1;
+    SliderListe[task].val = value;
+   
+    alpha = radians(-value);
+    SliderListe[task].locked = true;
+  }
+
+  if (SliderListe[task].label == "y0") {
+    value = round((int) random(10*SliderListe[task].steps))*0.1;
+    SliderListe[task].val = value;
+    y0 = y0Default-scale_size*value; //y0 er mellem y0default og
+  }
+  println(value);
 }
