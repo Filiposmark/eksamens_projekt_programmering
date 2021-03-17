@@ -9,7 +9,9 @@ float scale_size;
 float y, x, g_;
 boolean hit = false;
 boolean hasbeen = false;
-int skydframe;
+int skydframe, score, current_score;
+
+
 
 Forhindring[] ForhindringsListe = new Forhindring[1];
 Knap[] KnapListe = new Knap[3];
@@ -36,6 +38,7 @@ float[] tree_y = {random(450, 550), random(450, 550), random(450, 550)};
 void setup() {
   frameRate(20);  
   size(1700, 900);
+  current_score = 100;
 
   for (int i = 0; i < 100; i++) {
     confetti.add(new Confetti(width/2, height/2));
@@ -141,6 +144,9 @@ void draw() {
         confetti.remove(c);
       }
     }
+    
+    score += current_points;
+    
   }
   rectMode(CENTER);
   boxlist[0] = new Box("Bold", x0+ballx(time), bally(time), 20., 20.);
