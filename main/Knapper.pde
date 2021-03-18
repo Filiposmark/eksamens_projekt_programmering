@@ -67,9 +67,11 @@ class Genstart extends Knap { //Knappen "Genstart" tager informaition fra paraen
   void action () {
     reset();
     
+
     //Hvis man trykker "Prøv igen", trækker man 20 point fra de point man får for skuddet.
     current_score -= 20;
     
+
   }
 }
 
@@ -84,8 +86,12 @@ class Affyr extends Knap { //Knappen "Affyr" tager informaition fra paraent clas
   }
 
   void action () { //Starter skuddet
+    if(!Affyret && v0 > 0){
+
     skydframe = get_frame();
+    Affyret = true;
   }
+}
 }
 
 
@@ -98,6 +104,7 @@ class nyBane extends Knap { //Knappen "nyBane" tager informaition fra paraent cl
 
   void action () { //Gør det samme som "Genstart" laver bare også en ny bane.
     reset();
+    
     xSlutGenerate();
     scale_size = Skalering(xSlut);
     y0DefaultGenerate();
@@ -110,20 +117,42 @@ class nyBane extends Knap { //Knappen "nyBane" tager informaition fra paraent cl
 
     ForhindringsListe[0].x = xSlut;
     ForhindringsListe[0].y = ySlut;
+    if(withTasks){
     opgave();
-    
+
+    }
     current_score = 100;
   }
 }
 
 
-class StartSpil extends Knap {
-  StartSpil(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
+class StartSpil_opgave extends Knap {
+  StartSpil_opgave(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
   }
 
   void action () {
-    for (int i = 0; i < KnapListe.length; i++) {
+    for (int i = 2; i < KnapListe.length; i++) {
+      if (i <= 3) {
+        KnapListe[i].on = true;
+      } else {
+        KnapListe[i].on = false;
+      }
+    }
+    withTasks = true;
+    opgave();
+    Welcome = false;
+    
+  }
+}
+
+class StartSpil_fri extends Knap {
+  StartSpil_fri(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
+    super (x, y, Width, Height, label, farve, textSize, textColor);
+  }
+
+  void action () {
+    for (int i = 2; i < KnapListe.length; i++) {
       if (i <= 3) {
         KnapListe[i].on = true;
       } else {
@@ -131,11 +160,13 @@ class StartSpil extends Knap {
       }
     }
     
-    opgave();
+    withTasks = false;
     Welcome = false;
     
   }
 }
+
+
 
 class AfslutSpil extends Knap {
   AfslutSpil(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
@@ -168,10 +199,12 @@ void reset() {
     SliderListe[i].nulstillet = true;
     SliderListe[i].display();
   }
+KnapListe[0].on = false;
+KnapListe[1].on = false;
   
   hit = false;
-  
-  
-  
-  
+
+  Affyret = false;
+  missed = false;
+
 }

@@ -44,7 +44,7 @@ class Slider {
         y0 = y0Default-scale_size*val; //y0 er mellem y0default og
       }
     }
-
+fill(0);
     text(val+unit, x, y-20);
   }
 
@@ -58,7 +58,7 @@ class Slider {
       fill(255);
     }
     circle(x, y, 15);
-    fill(255);
+    fill(0);
 
     if (x >= linex+len) {
       x = linex+len;

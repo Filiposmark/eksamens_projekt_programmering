@@ -1,15 +1,28 @@
 
+
 int skydframe, score, current_score;
 float y0, y0Default, x0, t, xSlut, alpha, v0, ySlut, scale_size, y, x, g_;
+boolean missed = false;
+boolean Affyret = false;
+
 
 boolean hit = false;
 boolean hasbeen = false;
 boolean Welcome = true;
 
-Forhindring[] ForhindringsListe = new Forhindring[1];
-Knap[] KnapListe = new Knap[6];
  
 //Definerer slider liste og slidere 
+
+boolean withTasks;
+
+
+boolean Welcome = true;
+
+Forhindring[] ForhindringsListe = new Forhindring[1];
+Knap[] KnapListe = new Knap[7];
+
+
+
 Slider[] SliderListe = new Slider[3];
 Slider alpha_slider = new Slider(60, 60, 90, "alpha", "\u00b0");
 Slider v0_slider = new Slider(60, 130, 30, "v0", "m/s");
@@ -79,8 +92,10 @@ void setup() {
   KnapListe[1] = new nyBane(width/2+10, height/2-50, 250, 100, "Ny bane", color(100, 10, 100), 40, 255);
   KnapListe[2] = new Affyr(10, height-70, 120, 60, "Affyr", color(200, 25, 0), 22, 0);
   KnapListe[3] = new AfslutSpil(width-130, height-70, 120, 60, "Afslut", color(200, 25, 0), 22, 0);
-  KnapListe[4] = new StartSpil(width/2-125, height/2-110, 250, 100, "Start Spil", color(100, 10, 100), 40, 255);
-  KnapListe[5] = new Exit(width/2-125, height/2+10, 250, 100, "Luk Spil", color(100, 10, 100), 40, 255);
+  KnapListe[4] = new StartSpil_opgave(width/2-275, height/2-110, 250, 100, "Opgaver", color(100, 10, 100), 40, 255);
+  KnapListe[5] = new StartSpil_fri(width/2+25, height/2-110, 250, 100, "Frit spil", color(100, 10, 100), 40, 255);
+  KnapListe[6] = new Exit(width/2-125, height/2+10, 250, 100, "Luk Spil", color(100, 10, 100), 40, 255);
+ 
   SliderListe[0] = alpha_slider;
   SliderListe[1] = v0_slider;
   SliderListe[2] = y0_slider;
@@ -164,6 +179,7 @@ void draw() {
     for (int i = 0; i < KnapListe.length; i++) {
       KnapListe[i].DrawKnap();
     }
+
     
     
     //Definerer tiden det har taget skuddet
@@ -189,6 +205,7 @@ void draw() {
         }
       }
     }
+
     
     
     //Angiver kollisionen mellem bolden og målet
@@ -212,6 +229,17 @@ void draw() {
       confetti.add(new Confetti(width/4, height/4));
       confetti.add(new Confetti(width-width/4, height/4));
     }
+   }
+
+    if (hit || missed) {
+      KnapListe[0].on = true;
+      KnapListe[1].on = true;
+    }
+  
+
+  if (Affyret && (ballx(time) >= width || bally(time) >= height)) {
+    missed = true;
+
   }
 }
 
@@ -269,7 +297,7 @@ void xSlutGenerate() {
 }
 
 void ySlutGenerate() {
-  ySlut = ((int) random(0, 10*(y0Default*0.8)/scale_size))*0.1; //ySlut er et tilfældigt tal mellem 0 m og 80% af vinduets højde
+  ySlut = ((int) random(-1, 10*(y0Default*0.8)/scale_size))*0.1; //ySlut er et tilfældigt tal mellem -1 m og 80% af vinduets højde
 }
 
 void y0DefaultGenerate() {
@@ -284,6 +312,7 @@ void opgave() {
   }
 
   int task = (int) random(0, 3);
+
 
   float value = 0;
 
@@ -310,4 +339,5 @@ void opgave() {
     SliderListe[task].val = value;
     y0 = y0Default-scale_size*value; //y0 er mellem y0default og
   }
+
 }
