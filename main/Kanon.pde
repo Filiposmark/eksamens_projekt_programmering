@@ -1,5 +1,5 @@
 
-float BallSize = scale_size * 0.3;
+float BallSize = scale_size * 0.2;
 
 
 void DrawKanon() {
