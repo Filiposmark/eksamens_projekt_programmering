@@ -8,15 +8,18 @@ float ySlut;
 float scale_size;
 float y, x, g_;
 boolean hit = false;
+boolean missed = false;
+boolean Affyret = false;
 boolean hasbeen = false;
 int skydframe, score, current_score;
 
+boolean withTasks;
 
 
 boolean Welcome = true;
 
 Forhindring[] ForhindringsListe = new Forhindring[1];
-Knap[] KnapListe = new Knap[6];
+Knap[] KnapListe = new Knap[7];
 
 
 //Ball ball = new Ball(20,100,500); 
@@ -84,8 +87,10 @@ void setup() {
   KnapListe[1] = new nyBane(width/2+10, height/2-50, 250, 100, "Ny bane", color(100, 10, 100), 40, 255);
   KnapListe[2] = new Affyr(10, height-70, 120, 60, "Affyr", color(200, 25, 0), 22, 0);
   KnapListe[3] = new AfslutSpil(width-130, height-70, 120, 60, "Afslut", color(200, 25, 0), 22, 0);
-  KnapListe[4] = new StartSpil(width/2-125, height/2-110, 250, 100, "Start Spil", color(100, 10, 100), 40, 255);
-  KnapListe[5] = new Exit(width/2-125, height/2+10, 250, 100, "Luk Spil", color(100, 10, 100), 40, 255);
+  KnapListe[4] = new StartSpil_opgave(width/2-275, height/2-110, 250, 100, "Opgaver", color(100, 10, 100), 40, 255);
+  KnapListe[5] = new StartSpil_fri(width/2+25, height/2-110, 250, 100, "Frit spil", color(100, 10, 100), 40, 255);
+  KnapListe[6] = new Exit(width/2-125, height/2+10, 250, 100, "Luk Spil", color(100, 10, 100), 40, 255);
+ 
   SliderListe[0] = alpha_slider;
   SliderListe[1] = v0_slider;
   SliderListe[2] = y0_slider;
@@ -172,36 +177,40 @@ void draw() {
 
 
 
-  time = (frameCount-skydframe)/frameRate;
-  if (skydframe > 0) {
-    shoot();
-  }
+    time = (frameCount-skydframe)/frameRate;
+    if (skydframe > 0) {
+      shoot();
+    }
 
-  if (hit) {
-    for (int i = 0; i < confetti.size(); i++) {
-      Confetti c = confetti.get(i);
-      c.display();
-      c.move();
+    if (hit) {
+      for (int i = 0; i < confetti.size(); i++) {
+        Confetti c = confetti.get(i);
+        c.display();
+        c.move();
 
-      if (c.lifespan <= 0) {
-        confetti.remove(c);
-
+        if (c.lifespan <= 0) {
+          confetti.remove(c);
+        }
       }
     }
-    
-    score += current_points;
-    
-  }
-  rectMode(CENTER);
-  boxlist[0] = new Box("Bold", x0+ballx(time), bally(time), 20., 20.);
-  boxlist[1] = new Box("Target", scale_size*(ForhindringsListe[0].x+2), y0Default-scale_size*ForhindringsListe[0].y, scale_size*ForhindringsListe[0].Width, scale_size*ForhindringsListe[0].Height);
-  rectMode(CORNER);
+    if (hit || missed) {
+      KnapListe[0].on = true;
+      KnapListe[1].on = true;
+    }
 
-  if (boxCollision(boxlist[0], boxlist[1])) {
-    hit = true;
+    rectMode(CENTER);
+    boxlist[0] = new Box("Bold", x0+ballx(time), bally(time), 20., 20.);
+    boxlist[1] = new Box("Target", scale_size*(ForhindringsListe[0].x+2), y0Default-scale_size*ForhindringsListe[0].y, scale_size*ForhindringsListe[0].Width, scale_size*ForhindringsListe[0].Height);
+    rectMode(CORNER);
+
+    if (boxCollision(boxlist[0], boxlist[1])) {
+      hit = true;
+    }
   }
 
-  println(time);
+  if (Affyret && (ballx(time) >= width || bally(time) >= height)) {
+    missed = true;
+  }
 }
 
 
@@ -252,7 +261,7 @@ void xSlutGenerate() {
 }
 
 void ySlutGenerate() {
-  ySlut = ((int) random(0, 10*(y0Default*0.8)/scale_size))*0.1; //ySlut er et tilfældigt tal mellem 0 m og 80% af vinduets højde
+  ySlut = ((int) random(-1, 10*(y0Default*0.8)/scale_size))*0.1; //ySlut er et tilfældigt tal mellem -1 m og 80% af vinduets højde
 }
 
 void y0DefaultGenerate() {
@@ -267,10 +276,10 @@ void opgave() {
   }
 
   int task = (int) random(0, 3);
-  println(task);
+  // println(task);
 
   float value = 0;
-  
+
 
   SliderListe[task].locked = true;
   SliderListe[task].nulstillet = false;
@@ -282,9 +291,9 @@ void opgave() {
   }
 
   if (SliderListe[task].label == "alpha") {
-   value = round((int) random(100, 800))*0.1;
+    value = round((int) random(100, 800))*0.1;
     SliderListe[task].val = value;
-   
+
     alpha = radians(-value);
     SliderListe[task].locked = true;
   }
@@ -294,5 +303,5 @@ void opgave() {
     SliderListe[task].val = value;
     y0 = y0Default-scale_size*value; //y0 er mellem y0default og
   }
-  println(value);
+  //println(value);
 }

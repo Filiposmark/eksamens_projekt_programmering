@@ -18,5 +18,5 @@ int get_frame() {
 
 void shoot() {
   fill(0);
-  circle(x0+ballx(time), bally(time),20);
+  circle(x0+ballx(time), bally(time),scale_size*0.2);
 }
