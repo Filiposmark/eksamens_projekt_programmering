@@ -66,8 +66,8 @@ class Genstart extends Knap { //Knappen "Genstart" tager informaition fra paraen
   //Definerer sin action som "reset()"
   void action () {
     reset();
-    
 
+    
     //Hvis man trykker "Prøv igen", trækker man 20 point fra de point man får for skuddet.
     current_score -= 20;
     
@@ -85,13 +85,14 @@ class Affyr extends Knap { //Knappen "Affyr" tager informaition fra paraent clas
     on = true;
   }
 
+
   void action () { //Starter skuddet
     if(!Affyret && v0 > 0){
 
     skydframe = get_frame();
     Affyret = true;
+
   }
-}
 }
 
 
@@ -104,7 +105,7 @@ class nyBane extends Knap { //Knappen "nyBane" tager informaition fra paraent cl
 
   void action () { //Gør det samme som "Genstart" laver bare også en ny bane.
     reset();
-    
+
     xSlutGenerate();
     scale_size = Skalering(xSlut);
     y0DefaultGenerate();
@@ -117,8 +118,9 @@ class nyBane extends Knap { //Knappen "nyBane" tager informaition fra paraent cl
 
     ForhindringsListe[0].x = xSlut;
     ForhindringsListe[0].y = ySlut;
-    if(withTasks){
-    opgave();
+
+    if (withTasks) {
+      opgave();
 
     }
     current_score = 100;
@@ -142,10 +144,10 @@ class StartSpil_opgave extends Knap {
     withTasks = true;
     opgave();
     Welcome = false;
-    
   }
 }
 
+//Knap som starter spillet uden opgaver
 class StartSpil_fri extends Knap {
   StartSpil_fri(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
@@ -159,15 +161,14 @@ class StartSpil_fri extends Knap {
         KnapListe[i].on = false;
       }
     }
-    
+
     withTasks = false;
     Welcome = false;
-    
   }
 }
 
 
-
+//Knap som lukke spille-vinduet og går til startskærmen. 
 class AfslutSpil extends Knap {
   AfslutSpil(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
@@ -175,11 +176,10 @@ class AfslutSpil extends Knap {
 
   void action () {
     Welcome = true;
-    
   }
 }
 
-
+//Knap som afslutter spillet, ved at lukke vinduet
 class Exit extends Knap {
   Exit(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
@@ -190,7 +190,7 @@ class Exit extends Knap {
   }
 }
 
-
+//Funktion der nulstiller slidere, fjerner knapper og gør så man kan skydde igen.
 void reset() {
 
   for (int i = 0; i < SliderListe.length; i++) {
@@ -199,9 +199,9 @@ void reset() {
     SliderListe[i].nulstillet = true;
     SliderListe[i].display();
   }
-KnapListe[0].on = false;
-KnapListe[1].on = false;
-  
+  KnapListe[0].on = false;
+  KnapListe[1].on = false;
+
   hit = false;
 
   Affyret = false;

@@ -1,24 +1,17 @@
 
 
-
+//funktion som laver skaleringsfaktor. ganges på enhed i meter for at få størrelsen i pixels.
 float Skalering(float xSlut){
 
-  float sFaktor = width/(xSlut + 4); //pixels per meter
+  float sFaktor = width/(xSlut + 4); //pixels per meter. baseret på xSlut. Der lægges 4 meter til xSlut, da der er 2 meter kanonen til siden og fra målet til siden.
   
   return sFaktor;
 }
 
-
-float xHastighed (float v0xIN, float skaleringsfaktor) {
+//funktion som omregner hastighed fra m/s til pixels per sekund
+float ScaleHastighed (float vIN, float skaleringsfaktor) {
   
-  float v0x = (v0xIN * skaleringsfaktor); //pixels per sekund
+  float v = (vIN * skaleringsfaktor); //pixels per sekund
   
-  return v0x;
-}
-
-float yHastighed (float v0yIN, float skaleringsfaktor) {
-  
-   float v0y = (v0yIN * skaleringsfaktor); //pixels per sekund
-  
-  return v0y;
+  return v;
 }
