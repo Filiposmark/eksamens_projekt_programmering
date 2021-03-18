@@ -15,11 +15,11 @@ class Knap { //Laver klassen knapper
     this.farve = farve;
     this.textSize = textSize;
     this.textColor = textColor;
-    
+
     //Knapperne er ikke aktive som default
     on = false;
   }
-  
+
   //Knapperne bliver tegnet ved deres information som givet i constructoren
   void DrawKnap() {
     if (on) {
@@ -34,7 +34,7 @@ class Knap { //Laver klassen knapper
       popMatrix();
     }
   }
-  
+
   //Hvis der er blevet trykket på knappen bliver den aktiveret.
   boolean Trykket() {
     if (on) {
@@ -62,16 +62,14 @@ class Genstart extends Knap { //Knappen "Genstart" tager informaition fra paraen
   Genstart(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
   }
-  
+
   //Definerer sin action som "reset()"
   void action () {
     reset();
 
-    
+
     //Hvis man trykker "Prøv igen", trækker man 20 point fra de point man får for skuddet.
     current_score -= 20;
-    
-
   }
 }
 
@@ -81,17 +79,17 @@ class Genstart extends Knap { //Knappen "Genstart" tager informaition fra paraen
 class Affyr extends Knap { //Knappen "Affyr" tager informaition fra paraent classen.
   Affyr(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
- 
+
     on = true;
   }
 
 
   void action () { //Starter skuddet
-    if(!Affyret && v0 > 0){
+    if (!Affyret && v0 > 0) {
 
-    skydframe = get_frame();
-    Affyret = true;
-
+      skydframe = get_frame();
+      Affyret = true;
+    }
   }
 }
 
@@ -121,7 +119,6 @@ class nyBane extends Knap { //Knappen "nyBane" tager informaition fra paraent cl
 
     if (withTasks) {
       opgave();
-
     }
     current_score = 100;
   }
@@ -175,7 +172,9 @@ class AfslutSpil extends Knap {
   }
 
   void action () {
+    reset();
     Welcome = true;
+    score = 0;
   }
 }
 
@@ -203,8 +202,6 @@ void reset() {
   KnapListe[1].on = false;
 
   hit = false;
-
   Affyret = false;
   missed = false;
-
 }

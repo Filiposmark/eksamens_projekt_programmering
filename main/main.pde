@@ -16,8 +16,6 @@ boolean Welcome = true;
 boolean withTasks;
 
 
-boolean Welcome = true;
-
 Forhindring[] ForhindringsListe = new Forhindring[1];
 Knap[] KnapListe = new Knap[7];
 
@@ -93,7 +91,7 @@ void setup() {
   KnapListe[2] = new Affyr(10, height-70, 120, 60, "Affyr", color(200, 25, 0), 22, 0);
   KnapListe[3] = new AfslutSpil(width-130, height-70, 120, 60, "Afslut", color(200, 25, 0), 22, 0);
   KnapListe[4] = new StartSpil_opgave(width/2-275, height/2-110, 250, 100, "Opgaver", color(100, 10, 100), 40, 255);
-  KnapListe[5] = new StartSpil_fri(width/2+25, height/2-110, 250, 100, "Frit spil", color(100, 10, 100), 40, 255);
+  KnapListe[5] = new StartSpil_fri(width/2+25, height/2-110, 250, 100, "Frit Spil", color(100, 10, 100), 40, 255);
   KnapListe[6] = new Exit(width/2-125, height/2+10, 250, 100, "Luk Spil", color(100, 10, 100), 40, 255);
  
   SliderListe[0] = alpha_slider;
