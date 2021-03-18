@@ -1,12 +1,12 @@
 
 
-
-class Forhindring {
+//Klasse for objekt, som enten er en forhindring eller et mål.
+class Forhindring { 
 
   float x, y, Width, Height;
-  boolean target, hit;
+  boolean target, hit; //target bestemmer om forhindringen er et mål eller ej.
   color farve;
-  String Shape; 
+  String Shape; //bestemmer om det er rektangel eller cirkel.
 
   Forhindring(float x, float y, String Shape, float Width, float Height, color farve, boolean target) {
     this.x = x;
@@ -18,7 +18,7 @@ class Forhindring {
     this.target = target;
   }
 
-
+//tegner forhindringen
   void DrawForhindring() {
 
     pushMatrix();
@@ -32,8 +32,6 @@ class Forhindring {
       ellipse(scale_size*(x+2), height-scale_size*y, scale_size*Width, scale_size*Height);
     } else if (Shape == "Circle" && target) {
       ellipse(scale_size*(x+2), y0Default-scale_size*y, scale_size*Width, scale_size*Height);
-    } else {
-      println("intet");
     }
     popMatrix();
   }

@@ -19,10 +19,10 @@ class Slider {
     locked = false;
   }
 
-  void change() {
-    if (!locked) {
+  void change() { //Funktion der tjekker om slideren ændrer sig
+    if (!locked) { //Kan kun ændre sig hvis slideren ikke er låst
 
-      if (mousePressed && mouseX >= x-size && mouseX <= x+size && mouseY >= y-size && mouseY <= y+size) {
+      if (mousePressed && mouseX >= x-size && mouseX <= x+size && mouseY >= y-size && mouseY <= y+size) { //musen skal være inden for cirklen, før man kan ændre slideren.
         x = mouseX;
         nulstillet = false;
       }
@@ -37,18 +37,18 @@ class Slider {
       }
 
       if (label == "alpha") {
-        alpha = radians(-val);
+        alpha = radians(-val); //laver sliderværdien om fra grader til positive radianer.
       }
 
       if (label == "y0") {
-        y0 = y0Default-scale_size*val; //y0 er mellem y0default og
+        y0 = y0Default-scale_size*val; //y0 er den slider-valgte afstand fra y0default.
       }
     }
-fill(0);
-    text(val+unit, x, y-20);
+    fill(0);
+    text(val+unit, x, y-20); //skriver sliderens værdi
   }
 
-  void display() {
+  void display() { // tegner sliderne
 
     fill(0);
     line(linex, liney, linex+len, y);

@@ -62,7 +62,6 @@ class Genstart extends Knap {
 
   void action () {
     reset();
-    
   }
 }
 
@@ -77,11 +76,11 @@ class Affyr extends Knap {
   }
 
   void action () {
-    if(!Affyret && v0 > 0){
-    skydframe = get_frame();
-    Affyret = true;
+    if (!Affyret && v0 > 0) {
+      skydframe = get_frame();
+      Affyret = true;
+    }
   }
-}
 }
 
 
@@ -94,7 +93,7 @@ class nyBane extends Knap {
 
   void action () {
     reset();
-    
+
     xSlutGenerate();
     scale_size = Skalering(xSlut);
     y0DefaultGenerate();
@@ -107,8 +106,8 @@ class nyBane extends Knap {
 
     ForhindringsListe[0].x = xSlut;
     ForhindringsListe[0].y = ySlut;
-    if(withTasks){
-    opgave();
+    if (withTasks) {
+      opgave();
     }
   }
 }
@@ -130,10 +129,10 @@ class StartSpil_opgave extends Knap {
     withTasks = true;
     opgave();
     Welcome = false;
-    
   }
 }
 
+//Knap som starter spillet uden opgaver
 class StartSpil_fri extends Knap {
   StartSpil_fri(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
@@ -147,15 +146,14 @@ class StartSpil_fri extends Knap {
         KnapListe[i].on = false;
       }
     }
-    
+
     withTasks = false;
     Welcome = false;
-    
   }
 }
 
 
-
+//Knap som lukke spille-vinduet og går til startskærmen. 
 class AfslutSpil extends Knap {
   AfslutSpil(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
@@ -163,11 +161,10 @@ class AfslutSpil extends Knap {
 
   void action () {
     Welcome = true;
-    
   }
 }
 
-
+//Knap som afslutter spillet, ved at lukke vinduet
 class Exit extends Knap {
   Exit(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
@@ -178,7 +175,7 @@ class Exit extends Knap {
   }
 }
 
-
+//Funktion der nulstiller slidere, fjerner knapper og gør så man kan skydde igen.
 void reset() {
 
   for (int i = 0; i < SliderListe.length; i++) {
@@ -187,9 +184,9 @@ void reset() {
     SliderListe[i].nulstillet = true;
     SliderListe[i].display();
   }
-KnapListe[0].on = false;
-KnapListe[1].on = false;
-  
+  KnapListe[0].on = false;
+  KnapListe[1].on = false;
+
   hit = false;
   Affyret = false;
   missed = false;
