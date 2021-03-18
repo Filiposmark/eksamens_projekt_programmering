@@ -1,6 +1,6 @@
 
 
-class Knap {
+class Knap { //Laver klassen knapper
   int x, y, Height, Width, textSize;
   color farve, textColor;
   String label;
@@ -15,10 +15,12 @@ class Knap {
     this.farve = farve;
     this.textSize = textSize;
     this.textColor = textColor;
-
+    
+    //Knapperne er ikke aktive som default
     on = false;
   }
-
+  
+  //Knapperne bliver tegnet ved deres information som givet i constructoren
   void DrawKnap() {
     if (on) {
       pushMatrix();
@@ -32,7 +34,8 @@ class Knap {
       popMatrix();
     }
   }
-
+  
+  //Hvis der er blevet trykket på knappen bliver den aktiveret.
   boolean Trykket() {
     if (on) {
       boolean trykket = false;
@@ -47,7 +50,7 @@ class Knap {
     }
   }
 
-  void action() {
+  void action() { //Action for en knap er generelt tom, da den bliver defineret i en subclass.
   }
 }
 
@@ -55,27 +58,32 @@ class Knap {
 
 
 
-class Genstart extends Knap {
+class Genstart extends Knap { //Knappen "Genstart" tager informaition fra paraent classen.
   Genstart(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
   }
-
+  
+  //Definerer sin action som "reset()"
   void action () {
     reset();
+    
+    //Hvis man trykker "Prøv igen", trækker man 20 point fra de point man får for skuddet.
+    current_score -= 20;
+    
   }
 }
 
 
 
 
-class Affyr extends Knap {
+class Affyr extends Knap { //Knappen "Affyr" tager informaition fra paraent classen.
   Affyr(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
-
+ 
     on = true;
   }
 
-  void action () {
+  void action () { //Starter skuddet
     skydframe = get_frame();
   }
 }
@@ -83,12 +91,12 @@ class Affyr extends Knap {
 
 
 
-class nyBane extends Knap {
+class nyBane extends Knap { //Knappen "nyBane" tager informaition fra paraent classen.
   nyBane(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
   }
 
-  void action () {
+  void action () { //Gør det samme som "Genstart" laver bare også en ny bane.
     reset();
     xSlutGenerate();
     scale_size = Skalering(xSlut);
@@ -103,6 +111,8 @@ class nyBane extends Knap {
     ForhindringsListe[0].x = xSlut;
     ForhindringsListe[0].y = ySlut;
     opgave();
+    
+    current_score = 100;
   }
 }
 
@@ -160,4 +170,8 @@ void reset() {
   }
   
   hit = false;
+  
+  
+  
+  
 }

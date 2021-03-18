@@ -32,9 +32,7 @@ class Forhindring {
       ellipse(scale_size*(x+2), height-scale_size*y, scale_size*Width, scale_size*Height);
     } else if (Shape == "Circle" && target) {
       ellipse(scale_size*(x+2), y0Default-scale_size*y, scale_size*Width, scale_size*Height);
-    } else {
-      println("intet");
-    }
+    } 
     popMatrix();
   }
 }
