@@ -1,17 +1,17 @@
 
-float v0;
-float alpha;
-float y0, y0Default, x0, t;
 
-float xSlut;
-float ySlut;
-float scale_size;
-float y, x, g_;
-boolean hit = false;
+int skydframe, score, current_score;
+float y0, y0Default, x0, t, xSlut, alpha, v0, ySlut, scale_size, y, x, g_;
 boolean missed = false;
 boolean Affyret = false;
+
+
+boolean hit = false;
 boolean hasbeen = false;
-int skydframe, score, current_score;
+boolean Welcome = true;
+
+ 
+//Definerer slider liste og slidere 
 
 boolean withTasks;
 
@@ -22,16 +22,16 @@ Forhindring[] ForhindringsListe = new Forhindring[1];
 Knap[] KnapListe = new Knap[7];
 
 
-//Ball ball = new Ball(20,100,500); 
+
 Slider[] SliderListe = new Slider[3];
 Slider alpha_slider = new Slider(60, 60, 90, "alpha", "\u00b0");
-
 Slider v0_slider = new Slider(60, 130, 30, "v0", "m/s");
 Slider y0_slider = new Slider(60, 200, 1, "y0", "m"); //tilfældig Steps-værdi. ændres senere.
 
-
+//Definerer arrayliste til konfetti
 ArrayList<Confetti> confetti = new ArrayList<Confetti>();
 
+//Definerer baggrunds- og interaktive elementer
 Box[] boxlist = new Box[2];
 Sky[] skyliste = new Sky[5];
 float[] sky_x = {100, 400, 700, 1000, 1300};
@@ -47,17 +47,20 @@ void setup() {
   size(1700, 900);
   current_score = 100;
 
+//Initialiserer konfetti til forskellige positioner paa banen 
   for (int i = 0; i < 100; i++) {
-    confetti.add(new Confetti(width/2, height/2));
+    confetti.add(new Confetti(width/2, height-height/4));
     confetti.add(new Confetti(width/4, height/4));
     confetti.add(new Confetti(width-width/4, height/4));
   }
 
+//Initaliserer baggrundselementer
   for (int i = 0; i < skyliste.length; i++) {
     x = sky_x[i];
     y = sky_y[i];
     skyliste[i] = new Sky(x, y);
   }
+
 
   for (int i = 0; i < treelist.length; i++) {
     x = tree_x[i];
@@ -74,14 +77,16 @@ void setup() {
     treelist[i].setup_crown();
   }
 
+//Genererer banen
   xSlutGenerate();
   scale_size = Skalering(xSlut);
-
   y0DefaultGenerate();
   ySlutGenerate(); 
 
   x0 = scale_size*2;
 
+
+//Generer målet, knapper og slidere
   ForhindringsListe[0] = new Forhindring(xSlut, ySlut, "Circle", 0.5, 0.5, color(200, 50, 50), true);
   KnapListe[0] = new Genstart(width/2-260, height/2-50, 250, 100, "Prøv igen", color(100, 10, 100), 40, 255);
   KnapListe[1] = new nyBane(width/2+10, height/2-50, 250, 100, "Ny bane", color(100, 10, 100), 40, 255);
@@ -98,6 +103,8 @@ void setup() {
 }
 
 void draw() {
+  
+  //Viser velkomstbesked
   if (Welcome) {
     background(50, 175, 50);
 
@@ -125,9 +132,7 @@ void draw() {
     DrawKanon();
   } else {
 
-
-
-
+//starter selve spillet
     background (30, 150, 250);
     pushMatrix();
     fill(50, 175, 50);
@@ -143,27 +148,27 @@ void draw() {
       skyliste[i].collision();
     }
 
-
     for (int i = 0; i < treelist.length; i++) {
       treelist[i].make_trunk();
       treelist[i].make_crown();
     }
 
-
-
     y0DefaultGenerate();
     DrawKanon();
     drawAfstande();
 
+    //Viser point scoren
+    pushMatrix();
+    textSize(40);
+    String score_string = "Point: "+score;
+    text(score_string, width-textWidth(score_string)-30, 70);
+    popMatrix();
+
+    //Viser slidere, målet og knapper
     for (int i = 0; i < SliderListe.length; i++) {
       SliderListe[i].display();
       SliderListe[i].change();
     }
-
-
-    //println("alpha: "+alpha);
-    //println("v0: " + v0);
-    //println("y0: " +y0);
 
 
     for (int i = 0; i < ForhindringsListe.length; i++) {
@@ -175,16 +180,23 @@ void draw() {
       KnapListe[i].DrawKnap();
     }
 
-
-
+    
+    
+    //Definerer tiden det har taget skuddet
     time = (frameCount-skydframe)/frameRate;
+    
+    //Skuddet starter hvis parametre er opfyldt
     if (skydframe > 0) {
       shoot();
     }
-
+    
+    
+   
+    //Hvis målet bliver ramt, kommer der konfetti
     if (hit) {
       for (int i = 0; i < confetti.size(); i++) {
         Confetti c = confetti.get(i);
+       
         c.display();
         c.move();
 
@@ -193,34 +205,54 @@ void draw() {
         }
       }
     }
-    if (hit || missed) {
-      KnapListe[0].on = true;
-      KnapListe[1].on = true;
-    }
 
+    
+    
+    //Angiver kollisionen mellem bolden og målet
     rectMode(CENTER);
     boxlist[0] = new Box("Bold", x0+ballx(time), bally(time), 20., 20.);
     boxlist[1] = new Box("Target", scale_size*(ForhindringsListe[0].x+2), y0Default-scale_size*ForhindringsListe[0].y, scale_size*ForhindringsListe[0].Width, scale_size*ForhindringsListe[0].Height);
     rectMode(CORNER);
 
+
+    //Hvis bolden og målet kolliderer bliver parametren "hit" true, og der kommer konfetti. Scoren bliver opdateret.
     if (boxCollision(boxlist[0], boxlist[1])) {
       hit = true;
+      score += current_score;
     }
   }
 
+  //Der bliver tilføjet ny konfetti, når det gamle er væk
+  if (confetti.size() == 0) {
+    for (int i = 0; i < 100; i++) {
+      confetti.add(new Confetti(width/2, height-height/4));
+      confetti.add(new Confetti(width/4, height/4));
+      confetti.add(new Confetti(width-width/4, height/4));
+    }
+   }
+
+    if (hit || missed) {
+      KnapListe[0].on = true;
+      KnapListe[1].on = true;
+    }
+  
+
   if (Affyret && (ballx(time) >= width || bally(time) >= height)) {
     missed = true;
+
   }
 }
 
 
 void mouseReleased() {
+  
+  //Knapper og slidere bliver aktiveret på "mouseReleased"
   for (int i = 0; i < KnapListe.length; i++) {
     if (KnapListe[i].Trykket()) {
       KnapListe[i].action();
     }
   }
-
+  
   for (int i = 0; i < SliderListe.length; i++) {
     SliderListe[i].display();
     SliderListe[i].change();
@@ -229,7 +261,9 @@ void mouseReleased() {
 
 void drawAfstande() {
   int xLine = 35;
-
+  
+  
+  //Linjer bliver tegnet på baggrund af skalering.
   fill(0);
   textSize(15);
   text("xSlut: "+xSlut+" m", (width/2)-(textWidth("xSlut; "+xSlut+ " m")/2), height-xLine+25);
@@ -256,6 +290,8 @@ void drawAfstande() {
   strokeWeight(1);
 }
 
+//Banen bliver defineret
+
 void xSlutGenerate() {
   xSlut = ((int) random(80, 200))*0.1;
 }
@@ -269,14 +305,14 @@ void y0DefaultGenerate() {
 }
 
 
-
+//Opgaven bliver defineret. 
 void opgave() {
   for (int i = 0; i < SliderListe.length; i++) {
     SliderListe[i].locked = false;
   }
 
   int task = (int) random(0, 3);
-  // println(task);
+
 
   float value = 0;
 
@@ -303,5 +339,5 @@ void opgave() {
     SliderListe[task].val = value;
     y0 = y0Default-scale_size*value; //y0 er mellem y0default og
   }
-  //println(value);
+
 }
