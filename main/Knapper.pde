@@ -76,7 +76,7 @@ class Affyr extends Knap {
   }
 
   void action () {
-    //shoot();
+    skydframe = get_frame();
   }
 }
 
@@ -127,7 +127,6 @@ class StartSpil extends Knap {
   }
 }
 
-
 class AfslutSpil extends Knap {
   AfslutSpil(int x, int y, int Width, int Height, String label, color farve, int textSize, color textColor) {
     super (x, y, Width, Height, label, farve, textSize, textColor);
@@ -151,7 +150,6 @@ class Exit extends Knap {
 }
 
 
-
 void reset() {
 
   for (int i = 0; i < SliderListe.length; i++) {
@@ -160,5 +158,6 @@ void reset() {
     SliderListe[i].nulstillet = true;
     SliderListe[i].display();
   }
-  //tid = 0;
+  
+  hit = false;
 }

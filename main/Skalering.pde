@@ -16,8 +16,6 @@ float xHastighed (float v0xIN, float skaleringsfaktor) {
   return v0x;
 }
 
-
-
 float yHastighed (float v0yIN, float skaleringsfaktor) {
   
    float v0y = (v0yIN * skaleringsfaktor); //pixels per sekund

@@ -7,8 +7,8 @@ class Confetti {
   float anglevel = 0.1; 
   Confetti(float x, float y) {
     location = new PVector(x,y);
-    velocity = new PVector(random(-1,1), random(-1,1));
-    acceleration = new PVector(0,1);
+    velocity = new PVector(random(-2,2), random(-0.5,2));
+    acceleration = new PVector(random(-1,1),random(-1,1));
     color_ = color(random(50,200),random(50,200),random(50,200), lifespan);
   }
   
