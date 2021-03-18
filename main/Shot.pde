@@ -8,7 +8,7 @@ float ballx(float time) {
 }
 
 float bally(float time) {
-  return y0-time*ScaleHastighed(v0, scale_size)*sin(-alpha) - (0.5*gravity*scale_size)*sq(time); //Skuddets position i y-retningen. Bestemt af v0's y-komposant fratrukket tyngdeaccelerationen. Fysikformel
+  return y0-time*ScaleHastighed(v0, scale_size)*sin(-alpha) - (0.5*gravity*scale_size)*sq(time); //Skuddets position i y-retningen. Bestemt af v0's y-komposant fratrukket tyngdeaccelerationen. Formel fra fysikbog.
 }
 
 //gemmer den aktuelle frame
