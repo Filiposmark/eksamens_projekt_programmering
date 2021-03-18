@@ -315,9 +315,7 @@ void opgave() {
 
   int task = (int) random(0, 3);
 
-
   float value = 0;
-
 
   SliderListe[task].locked = true;
   SliderListe[task].nulstillet = false;

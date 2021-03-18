@@ -179,6 +179,10 @@ class AfslutSpil extends Knap {
     reset();
     Welcome = true;
     score = 0;
+    
+    for (int i = 0; i < SliderListe.length; i++) {
+    SliderListe[i].locked = false;
+  }
   }
 }
 
