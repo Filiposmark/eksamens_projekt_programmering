@@ -1,5 +1,7 @@
 
-class Sky {
+
+
+class Sky {    //Laver klassen sky
 
   int elements = 20;
   float sum;
@@ -9,13 +11,15 @@ class Sky {
   
 
   float posx, posy;
-
+  
+  //Skyen bliver initialiseret på sin givne position
   Sky(float posx, float posy) {
     this.posx = posx;
     this.posy = posy+random(-50, 200);
     
   }
-
+  
+  //De enkelte elementer af skyen bliver lavet random indenfor en rimlig afstand fra hinanden.
   void setup_sky() {
     for (int i = 0; i < posxlist.length; i++) {
       posxlist[i] = posx+random(-30, 30);
@@ -23,6 +27,8 @@ class Sky {
       radiuslist[i] = random(50, 80);
     }
   }
+  
+  //Skyen bliver samlet
 
   void makeSky() {
 
@@ -39,12 +45,14 @@ class Sky {
     return sum;
   }
 
+  //Skyen bevæger sig ved at lægge til på skyens x-position
   void moveSky() {
     for (int i = 0; i < posxlist.length; i++) {
       posxlist[i] += sum * 0.001;
     }
   }
-
+  
+  //Hvis skyen er lidt over bredden af skærmen, bliver den sat tilbage til lidt før skærmen, med en lidt ny y-position.
   void collision() {
     if (posxlist[0] > 2000) {
       for (int i = 0; i < posxlist.length; i++) {
@@ -55,7 +63,9 @@ class Sky {
   }
 }
 
-class Tree {
+
+
+class Tree {  //Laver klassen Tree
 
   float x, y;
 
@@ -71,6 +81,7 @@ class Tree {
     this.y = y;
   }
 
+  //trækronens elementer bliver sat op
   void setup_crown() {
     for (int i = 0; i < posxlist.length; i++) {
       posxlist[i] = x + random(-30, 30);
@@ -78,6 +89,8 @@ class Tree {
       radiuslist[i] = random(50, 80);
     }
   }
+  
+  //Træstammen bliver sat op
   
   void make_trunk() {
     fill(101,67,33);
@@ -101,6 +114,8 @@ class Tree {
     
     
   }
+  
+  //Trækronen bliver samlet
 
   void make_crown() {
 
@@ -108,11 +123,5 @@ class Tree {
       fill(0,155,0);
       circle(posxlist[i], posylist[i], radiuslist[i]);
     }
-  }
-  
-  
-
-  class Waterfall {
-    
   }
 }
