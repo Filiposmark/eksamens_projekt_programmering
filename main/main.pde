@@ -13,15 +13,19 @@ int skydframe, score, current_score;
 
 
 
+boolean Welcome = true;
+
 Forhindring[] ForhindringsListe = new Forhindring[1];
-Knap[] KnapListe = new Knap[3];
+Knap[] KnapListe = new Knap[6];
 
 
 //Ball ball = new Ball(20,100,500); 
 Slider[] SliderListe = new Slider[3];
 Slider alpha_slider = new Slider(60, 60, 90, "alpha", "\u00b0");
-Slider v0_slider = new Slider(60, 130, 40, "v0", "m/s");
-Slider y0_slider = new Slider(60, 200, 5, "y0", "m");
+
+Slider v0_slider = new Slider(60, 130, 30, "v0", "m/s");
+Slider y0_slider = new Slider(60, 200, 1, "y0", "m"); //tilfældig Steps-værdi. ændres senere.
+
 
 ArrayList<Confetti> confetti = new ArrayList<Confetti>();
 
@@ -79,6 +83,9 @@ void setup() {
   KnapListe[0] = new Genstart(width/2-260, height/2-50, 250, 100, "Prøv igen", color(100, 10, 100), 40, 255);
   KnapListe[1] = new nyBane(width/2+10, height/2-50, 250, 100, "Ny bane", color(100, 10, 100), 40, 255);
   KnapListe[2] = new Affyr(10, height-70, 120, 60, "Affyr", color(200, 25, 0), 22, 0);
+  KnapListe[3] = new AfslutSpil(width-130, height-70, 120, 60, "Afslut", color(200, 25, 0), 22, 0);
+  KnapListe[4] = new StartSpil(width/2-125, height/2-110, 250, 100, "Start Spil", color(100, 10, 100), 40, 255);
+  KnapListe[5] = new Exit(width/2-125, height/2+10, 250, 100, "Luk Spil", color(100, 10, 100), 40, 255);
   SliderListe[0] = alpha_slider;
   SliderListe[1] = v0_slider;
   SliderListe[2] = y0_slider;
@@ -86,47 +93,83 @@ void setup() {
 }
 
 void draw() {
+  if (Welcome) {
+    background(50, 175, 50);
 
-  background (30, 150, 250);
-  pushMatrix();
-  fill(50, 175, 50);
-  rect(0, height-200, width, 200);
-  popMatrix();
+    for (int i = 0; i < KnapListe.length; i++) {
+      if (i <= 3) {
+        KnapListe[i].on = false;
+      } else {
+        KnapListe[i].on = true;
+      }
+    }
 
-  //pushMatrix();
-  //noStroke();
-  //fill(20, 255, 0);
-  //ellipse(x0, y0, BallSize, BallSize);
-  //popMatrix();
+    for (int i = 0; i < KnapListe.length; i++) {
+      KnapListe[i].DrawKnap();
+    }
+    fill(50);
+    textSize(30);
+    text("Velkommen til", (width/2)-0.5*textWidth("Velkommen"), 100);
+    fill(0);
+    textSize(80);
+    text("Fysik på Jorden", (width/2)-0.5*textWidth("Fysik på Jorden"), 200);
 
-  for (int i = 0; i < skyliste.length; i++) {
-    skyliste[i].makeSky();
-    skyliste[i].moveSky();
-    skyliste[i].collision();
-  }
+    y0DefaultGenerate();
+    y0 = y0Default;
+    alpha = atan((mouseY-y0)/(mouseX-x0));
+    DrawKanon();
+  } else {
 
-  for (int i = 0; i < treelist.length; i++) {
-    treelist[i].make_trunk();
-    treelist[i].make_crown();
-  }
 
-  y0DefaultGenerate();
-  DrawKanon();
-  drawAfstande();
 
-  for (int i = 0; i < SliderListe.length; i++) {
-    SliderListe[i].display();
-    SliderListe[i].change();
-  }
 
-  for (int i = 0; i < ForhindringsListe.length; i++) {
-    ForhindringsListe[i].DrawForhindring();
-  }
+    background (30, 150, 250);
+    pushMatrix();
+    fill(50, 175, 50);
+    rect(0, height-200, width, 200);
+    popMatrix();
 
-  for (int i = 0; i < KnapListe.length; i++) {
-    KnapListe[i].on = true;
-    KnapListe[i].DrawKnap();
-  }
+
+
+
+    for (int i = 0; i < skyliste.length; i++) {
+      skyliste[i].makeSky();
+      skyliste[i].moveSky();
+      skyliste[i].collision();
+    }
+
+
+    for (int i = 0; i < treelist.length; i++) {
+      treelist[i].make_trunk();
+      treelist[i].make_crown();
+    }
+
+
+
+    y0DefaultGenerate();
+    DrawKanon();
+    drawAfstande();
+
+    for (int i = 0; i < SliderListe.length; i++) {
+      SliderListe[i].display();
+      SliderListe[i].change();
+    }
+
+
+    //println("alpha: "+alpha);
+    //println("v0: " + v0);
+    //println("y0: " +y0);
+
+
+    for (int i = 0; i < ForhindringsListe.length; i++) {
+      ForhindringsListe[i].DrawForhindring();
+    }
+
+
+    for (int i = 0; i < KnapListe.length; i++) {
+      KnapListe[i].DrawKnap();
+    }
+
 
 
   time = (frameCount-skydframe)/frameRate;
@@ -142,6 +185,7 @@ void draw() {
 
       if (c.lifespan <= 0) {
         confetti.remove(c);
+
       }
     }
     
@@ -182,26 +226,22 @@ void drawAfstande() {
   text("xSlut: "+xSlut+" m", (width/2)-(textWidth("xSlut; "+xSlut+ " m")/2), height-xLine+25);
 
   pushMatrix();
-  translate(scale_size*(xSlut+3.3), y0Default-0.5*(ySlut*scale_size));
+  translate(scale_size*(xSlut+3.3), y0-0.5*(y0-(y0Default-scale_size*ySlut)));
   rotate(PI/2);
-  text("ySlut: "+ySlut+" m", 0-(textWidth("ySlut: "+ySlut+ " m")*0.5), 5);
+  text("ySlut: "+(round(10*((y0-y0Default)/scale_size+ySlut))*0.1)+" m", 0-(textWidth("ySlut: "+(round(10*((y0-y0Default)/scale_size+ySlut))*0.1)+ " m")*0.5), 5);
   popMatrix();
 
   strokeWeight(3);
   //tegner linjer til x-afstand
-  //line(x0, height-xLine, (width/2)-(textWidth(xSlut+ " m")/2)-10, height-xLine);
-  //line((width/2)+(textWidth(xSlut+ " m")/2)+10, height-xLine, scale_size*(xSlut+2), height-xLine);
   line(x0, height-xLine, scale_size*(xSlut+2), height-xLine);
 
   line(x0, height-xLine+10, x0, height-xLine-10);
   line(scale_size*(xSlut+2), height-xLine+10, scale_size*(xSlut+2), height-xLine-10);
 
   //tegner linjer til y-afstand
-  //line(scale_size*(xSlut+3), y0Default, scale_size*(xSlut+3), (y0Default-0.5*(ySlut*scale_size+50))+(textWidth(ySlut+ " m")/2)+10);
-  //line(scale_size*(xSlut+3), y0Default-scale_size*ySlut, scale_size*(xSlut+3), (y0Default-0.5*(ySlut*scale_size+50))-(textWidth(ySlut+ " m")/2)-10);
-  line(scale_size*(xSlut+3), y0Default, scale_size*(xSlut+3), y0Default-scale_size*ySlut);
+  line(scale_size*(xSlut+3), y0, scale_size*(xSlut+3), y0Default-scale_size*ySlut);
 
-  line(scale_size*(xSlut+3)-10, y0Default, scale_size*(xSlut+3)+10, y0Default);
+  line(scale_size*(xSlut+3)-10, y0, scale_size*(xSlut+3)+10, y0);
   line(scale_size*(xSlut+3)-10, y0Default-scale_size*ySlut, scale_size*(xSlut+3)+10, y0Default-scale_size*ySlut);
 
   strokeWeight(1);
@@ -217,4 +257,42 @@ void ySlutGenerate() {
 
 void y0DefaultGenerate() {
   y0Default = height-scale_size*1.5-100;
+}
+
+
+
+void opgave() {
+  for (int i = 0; i < SliderListe.length; i++) {
+    SliderListe[i].locked = false;
+  }
+
+  int task = (int) random(0, 3);
+  println(task);
+
+  float value = 0;
+  
+
+  SliderListe[task].locked = true;
+  SliderListe[task].nulstillet = false;
+
+  if (SliderListe[task].label == "v0") {
+    value = round((int) random(150, 300))*0.1;
+    SliderListe[task].val = value;
+    v0 = value;
+  }
+
+  if (SliderListe[task].label == "alpha") {
+   value = round((int) random(100, 800))*0.1;
+    SliderListe[task].val = value;
+   
+    alpha = radians(-value);
+    SliderListe[task].locked = true;
+  }
+
+  if (SliderListe[task].label == "y0") {
+    value = round((int) random(10*SliderListe[task].steps))*0.1;
+    SliderListe[task].val = value;
+    y0 = y0Default-scale_size*value; //y0 er mellem y0default og
+  }
+  println(value);
 }
