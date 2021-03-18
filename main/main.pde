@@ -229,10 +229,14 @@ void draw() {
     }
    }
 
+//Hvis man rammer eller skyder forbi, vises knapper
     if (hit || missed) {
-      KnapListe[0].on = true;
+      if (missed){          //Prøv igen knap vises kun hvis der skydes forbi.
+        KnapListe[0].on = true;
+      }
       KnapListe[1].on = true;
     }
+   
   
 
   if (Affyret && (ballx(time) >= width || bally(time) >= height)) {

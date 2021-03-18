@@ -65,11 +65,15 @@ class Genstart extends Knap { //Knappen "Genstart" tager informaition fra paraen
 
   //Definerer sin action som "reset()"
   void action () {
-    reset();
+    if (!hit) {
+      reset();
 
 
-    //Hvis man trykker "Prøv igen", trækker man 20 point fra de point man får for skuddet.
-    current_score -= 20;
+      //Hvis man trykker "Prøv igen", trækker man 20 point fra de point man får for skuddet.
+      if (current_score > 0) {
+        current_score -= 20;
+      }
+    }
   }
 }
 
