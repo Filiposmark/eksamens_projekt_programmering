@@ -44,7 +44,7 @@ void DrawKanon() {
   pushMatrix();
   noStroke();
   fill(130, 90, 60);
-  rect(0, (y0+scale_size*2)-scale_size*0.6+scale_size * 0.35*0.5, x0+scale_size*0.6, height); //tegner selve kanonen
+  rect(0, (y0+scale_size*2)-scale_size*0.6+scale_size * 0.35*0.5, x0+scale_size*0.6, height); //tegner kanonens platform.
   stroke(1);
   popMatrix();
   
