@@ -17,6 +17,7 @@ boolean withTasks;
 
 
 Forhindring[] ForhindringsListe = new Forhindring[1];
+
 Knap[] KnapListe = new Knap[7];
 
 
@@ -86,6 +87,7 @@ void setup() {
 
 //Generer målet, knapper og slidere
   ForhindringsListe[0] = new Forhindring(xSlut, ySlut, "Circle", 0.5, 0.5, color(200, 50, 50), true);
+  
   KnapListe[0] = new Genstart(width/2-260, height/2-50, 250, 100, "Prøv igen", color(100, 10, 100), 40, 255);
   KnapListe[1] = new nyBane(width/2+10, height/2-50, 250, 100, "Ny bane", color(100, 10, 100), 40, 255);
   KnapListe[2] = new Affyr(10, height-70, 120, 60, "Affyr", color(200, 25, 0), 22, 0);
@@ -97,12 +99,12 @@ void setup() {
   SliderListe[0] = alpha_slider;
   SliderListe[1] = v0_slider;
   SliderListe[2] = y0_slider;
-  SliderListe[2].steps = (y0Default-275)/scale_size;
+  SliderListe[2].steps = (y0Default-275)/scale_size; //y0 kan være mellem 0m og afstanden til et sted lige under sliderne. Kanonen kan derfor ikke rykkes op i sliderne.
 }
 
 void draw() {
   
-  //Viser velkomstbesked
+  //Viser velkomstskærm
   if (Welcome) {
     background(50, 175, 50);
 
